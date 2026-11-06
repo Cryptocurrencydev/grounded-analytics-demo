@@ -71,11 +71,11 @@ const CATEGORIES: Record<string, string> = {
                 <td>{{ expected(q) }}</td>
                 <td [class.bad]="!q.baseline.correct" [class.good]="q.baseline.correct">
                   <b>{{ q.baseline.correct ? '✓' : '✗' }}</b> {{ q.baseline.text }}
-                  @if (q.baseline.unsupported.length) { <small>Unsupported: {{ q.baseline.unsupported.join(', ') }}</small> }
+                  @if (q.baseline.unsupported.length) { <small>Not in the data: {{ q.baseline.unsupported.join(', ') }}</small> }
                 </td>
                 <td [class.bad]="!q.grounded.correct" [class.good]="q.grounded.correct">
                   <b>{{ q.grounded.correct ? '✓' : '✗' }}</b> {{ q.grounded.text || q.grounded.answer_type }}
-                  @if (q.grounded.unsupported.length) { <small>Unsupported: {{ q.grounded.unsupported.join(', ') }}</small> }
+                  @if (q.grounded.unsupported.length) { <small>Not in the data: {{ q.grounded.unsupported.join(', ') }}</small> }
                   @if ((q.grounded.attempts ?? 1) > 1) { <small>Regenerated after the validator rejected the first answer</small> }
                 </td>
               </tr>

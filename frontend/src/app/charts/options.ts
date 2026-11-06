@@ -120,12 +120,16 @@ export function segmentOptions(
     series: [
       {
         type: 'bar', name: 'Mean', dataLabels: { enabled: true, format: '{y:.2f}', inside: true, align: 'right', style: { color: '#fff', textOutline: 'none', fontWeight: '500', fontSize: '12px' } },
-        data: sorted.map((r) => ({
-          y: r.value,
-          color: BAR,
-          opacity: lit.length && !lit.includes(r.name) ? 0.28 : r.small ? 0.5 : 1,
-          className: lit.includes(r.name) ? 'q-lit' : undefined,
-        })),
+        data: sorted.map((r) => {
+          const faded = (lit.length > 0 && !lit.includes(r.name)) || r.small;
+          return {
+            y: r.value,
+            color: BAR,
+            opacity: lit.length && !lit.includes(r.name) ? 0.28 : r.small ? 0.5 : 1,
+            className: lit.includes(r.name) ? 'q-lit' : undefined,
+            dataLabels: faded ? { style: { color: INK, textOutline: 'none', fontWeight: '500', fontSize: '12px' } } : undefined,
+          };
+        }),
       },
       {
         type: 'errorbar', name: '95% CI', color: INK, stemWidth: 1, whiskerLength: 8, enableMouseTracking: false,
@@ -149,7 +153,7 @@ export function npsOptions(d: Dashboard, refs: ChartRef[]): Highcharts.Options {
   return {
     ...base(280),
     xAxis: {
-      categories: rows.map((_, i) => label(i)), labels: { ...axisLabels, useHTML: true }, lineColor: GRID, tickLength: 0,
+      categories: rows.map((_, i) => label(i)), labels: { ...axisLabels, useHTML: true, rotation: 0, autoRotation: false }, lineColor: GRID, tickLength: 0,
     },
     yAxis: { min: 0, max: 100, title: { text: undefined }, labels: { ...axisLabels, format: '{value}%' }, gridLineColor: GRID, reversedStacks: false },
     tooltip: { ...base(0).tooltip, shared: true, valueSuffix: '%' },

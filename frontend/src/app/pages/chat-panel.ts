@@ -24,7 +24,7 @@ import { formatStat } from './format';
               <div class="ai-mark">
                 <span class="badge ai-badge">AI-generated</span>
                 @if (m.result?.validation?.ok && m.result!.claims.length) {
-                  <span class="badge ok-badge">✓ {{ m.result!.validation!.numbers_matched }} of {{ m.result!.validation!.numbers_checked }} figures verified</span>
+                  <span class="badge ok-badge">✓ {{ m.result!.validation!.numbers_matched }} of {{ m.result!.validation!.numbers_checked }} {{ m.result!.validation!.numbers_checked === 1 ? 'figure' : 'figures' }} verified</span>
                 }
                 @switch (m.result?.answer_type) {
                   @case ('cannot_answer') { <span class="badge plain">Can't answer from this data</span> }

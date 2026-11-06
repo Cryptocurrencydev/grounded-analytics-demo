@@ -48,7 +48,7 @@ import { formatStat } from './format';
                 @if (r.status === 'ok') {
                   <div class="ai-mark">
                     <span class="badge ai-badge">AI-generated</span>
-                    <span class="badge ok-badge" data-testid="verified">✓ {{ r.validation?.numbers_matched }} of {{ r.validation?.numbers_checked }} figures verified</span>
+                    <span class="badge ok-badge" data-testid="verified">✓ {{ r.validation?.numbers_matched }} of {{ r.validation?.numbers_checked }} {{ r.validation?.numbers_checked === 1 ? 'figure' : 'figures' }} verified</span>
                   </div>
                 } @else {
                   <div class="notice warn" data-testid="fallback">
