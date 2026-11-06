@@ -1,0 +1,7 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Stat ids such as \"key\":\"top2.leadership\" in the committed cache are not secrets"
+regexTarget = "match"
+regexes = ['''key":"top2\.[a-z]+"''']
