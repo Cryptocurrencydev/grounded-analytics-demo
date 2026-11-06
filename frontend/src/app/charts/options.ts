@@ -153,7 +153,7 @@ export function npsOptions(d: Dashboard, refs: ChartRef[]): Highcharts.Options {
   return {
     ...base(280),
     xAxis: {
-      categories: rows.map((_, i) => label(i)), labels: { ...axisLabels, useHTML: true, rotation: 0, autoRotation: false }, lineColor: GRID, tickLength: 0,
+      categories: rows.map((_, i) => label(i)), labels: { ...axisLabels, useHTML: true, rotation: 0, autoRotation: [0] }, lineColor: GRID, tickLength: 0,
     },
     yAxis: { min: 0, max: 100, title: { text: undefined }, labels: { ...axisLabels, format: '{value}%' }, gridLineColor: GRID, reversedStacks: false },
     tooltip: { ...base(0).tooltip, shared: true, valueSuffix: '%' },
