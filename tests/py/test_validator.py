@@ -36,8 +36,8 @@ def codes(text, cites, lang="en", scope=None):
     ("Agreement stands at 62.4%.", ["S02"]),
     ("Agreement stands at 62 %.", ["S02"]),
     ("Agreement stands at 62 percent.", ["S02"]),
-    ("Workload fell by 0.14 to 3.21 and the drop is significant (p = 0.032).", ["S03"]),
-    ("Workload fell by 0.1.", ["S03"]),
+    ("Manageable workload fell by 0.14 to 3.21 and the drop is significant (p = 0.032).", ["S03"]),
+    ("Manageable workload fell by 0.1.", ["S03"]),
     ("Workload changed by -0.14.", ["S03"]),
     ("The gap is significant (p < 0.001).", ["S05"]),
     ("The change is not statistically significant.", ["S04"]),
@@ -58,7 +58,7 @@ def test_accepts(text, cites):
     ("Es gingen 1.234 Antworten ein.", ["S07"], "de"),
     ("Im 3. Quartal 2026 liegt die Zufriedenheit bei 3,9.", ["S01"], "de"),
     ("Die Veränderung ist nicht signifikant.", ["S04"], "de"),
-    ("Die Arbeitsbelastung ist gesunken, p = 0,032.", ["S03"], "de"),
+    ("Die bewältigbare Arbeitsbelastung ist gesunken, p = 0,032.", ["S03"], "de"),
 ])
 def test_accepts_german(text, cites, lang):
     assert codes(text, cites, lang) == []
@@ -93,9 +93,11 @@ def test_catches_unknown_citation():
 
 
 @pytest.mark.parametrize("text,cites,code,lang", [
-    ("Workload rose by 0.14.", ["S03"], "direction_mismatch", "en"),
+    ("Manageable workload rose by 0.14.", ["S03"], "direction_mismatch", "en"),
+    ("Workload fell by 0.14.", ["S03"], "ambiguous_polarity", "en"),
+    ("Die Arbeitsbelastung ist gesunken.", ["S03"], "ambiguous_polarity", "de"),
     ("Growth fell by 0.05.", ["S04"], "direction_mismatch", "en"),
-    ("Die Arbeitsbelastung ist gestiegen.", ["S03"], "direction_mismatch", "de"),
+    ("Die bewältigbare Arbeitsbelastung ist gestiegen.", ["S03"], "direction_mismatch", "de"),
     ("Growth improved significantly.", ["S04"], "unsupported_significance", "en"),
     ("The change is not significant.", ["S03"], "unsupported_significance", "en"),
     ("Satisfaction is significantly high at 3.85.", ["S01"], "unsupported_significance", "en"),
@@ -123,6 +125,31 @@ def test_active_filter_counts_as_covered():
     assert codes("In the North, satisfaction averages 3.85.", ["S01"], scope=["North"]) == []
 
 
+@pytest.mark.parametrize("text", ["Satisfaction is 3.85 on the 1-5 scale.", "Satisfaction is 3.85 on the 1–5 scale.", "Satisfaction is 3.85 on a scale of 1 to 5."])
+def test_the_survey_scale_is_not_a_figure(text):
+    assert codes(text, ["S01"]) == []
+
+
+@pytest.mark.parametrize("text,lang", [("Across all 6 quarters satisfaction is 3.85.", "en"), ("Über alle 6 Quartale liegt die Zufriedenheit bei 3,85.", "de")])
+def test_the_scope_label_is_not_a_figure(text, lang):
+    assert codes(text, ["S01"], lang) == []
+
+
+def test_other_quarter_counts_are_still_checked():
+    assert "number_not_found" in codes("Across all 7 quarters satisfaction is 3.85.", ["S01"])
+
+
+def test_scale_mask_does_not_hide_a_real_range():
+    assert "number_not_found" in codes("Satisfaction moved 1-5.5 points.", ["S01"])
+
+
+def test_tally_stat_supports_significance_wording():
+    tally = stat("S09", 0, "count", 0, 3000, kind="count")
+    tally.key = "delta.significant_changes"
+    r = validate([Claim(text="No measure changed significantly, 0 in total.", cites=["S09"])], {"S09": tally}, "en")
+    assert r.ok, r.issues
+
+
 def test_support_as_a_verb_is_not_the_department():
     assert codes("These figures support a mean of 3.85.", ["S01"]) == []
 
@@ -133,7 +160,7 @@ def test_stat_ids_and_ranges_do_not_become_numbers():
 
 
 def test_counts_numbers_for_the_report():
-    r = validate([Claim(text="Workload fell by 0.14 to 3.21.", cites=["S03"])], STATS, "en")
+    r = validate([Claim(text="Manageable workload fell by 0.14 to 3.21.", cites=["S03"])], STATS, "en")
     assert (r.ok, r.claims_checked, r.numbers_checked, r.numbers_matched) == (True, 1, 2, 2)
 
 

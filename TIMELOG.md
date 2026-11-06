@@ -8,3 +8,6 @@
 | 2026-11-06 | Eval harness | Pandas answer key, shared scorer, baseline and grounded runners |
 | 2026-11-06 | Frontend | Angular 22 with signals, Highcharts, AI panel, chat, applications, eval and data flow pages |
 | 2026-11-06 | Tests and CI | Pytest, Angular unit tests, Playwright, GitHub Actions |
+| 2026-11-06 | Deploy | Vercel Python functions in fra1, Neon in Frankfurt. First deploy failed: Vercel installed from a tool-only pyproject.toml. Moved tool config out, added a runtime import check to CI |
+| 2026-11-06 | Real model runs | Eval and prewarm. Read the answers by hand and fixed false rejections (scale label, scope label, theme names, period direction) and a polarity trap ("workload fell") |
+| 2026-11-06 | Eval scoring | First scorer over-counted baseline errors, so added a full truth table and rescored. Audited remaining flags against raw data |

@@ -17,6 +17,7 @@ from .catalog import (
     QUARTERS,
     QUESTIONS,
     SMALL_SAMPLE_WARN,
+    THEME_ENTITIES,
     THEMES,
     Filters,
     comparison_windows,
@@ -268,4 +269,5 @@ def _theme_stats(f: Filters, lang: str, add) -> None:
                        f"Kommentarthema: {THEMES[theme]['de']} (Anteil der Kommentare)"),
             related=[_num("comments_in_theme", c, "count", 0)],
             refs=[pseudonym(r) for r in data.theme_response_ids(f, theme)],
+            entities=THEME_ENTITIES.get(theme, []),
             chart=ChartRef(chart="themes", categories=[theme]))

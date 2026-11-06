@@ -64,7 +64,9 @@ def ask_baseline(llm, q: dict, system: str) -> dict:
     t0 = time.monotonic()
     try:
         r: LLMResponse = llm.create(system=system, messages=[{"role": "user", "content": q["question"]}],
-                                    schema=BASELINE_SCHEMA, effort=BASELINE_EFFORT, max_tokens=32000, cache_prompt=True)
+                                    schema=BASELINE_SCHEMA, effort=BASELINE_EFFORT, max_tokens=100_000, cache_prompt=True)
+        if r.stop_reason != "end_turn":
+            raise ValueError(f"stop_reason {r.stop_reason} after {r.usage.get('output_tokens')} output tokens")
         out = json.loads(r.text)
         return {"answer_type": out["answer_type"], "text": out["text"], "usage": r.usage,
                 "latency_s": round(time.monotonic() - t0, 1)}
@@ -85,54 +87,71 @@ def ask_grounded(llm, q: dict) -> dict:
     }
 
 
+def finish(rows: list[dict], meta: dict, path: Path) -> None:
+    result = {**meta, "summary": {"baseline": summarise(rows, "baseline"), "grounded": summarise(rows, "grounded")},
+              "questions": [{k: v for k, v in r.items() if k != "truth_table"} for r in rows]}
+    path.write_text(json.dumps(result, indent=1, ensure_ascii=False, default=str))
+    print(json.dumps(result["summary"], indent=1))
+    print("wrote", path)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mock", action="store_true")
-    ap.add_argument("--only", help="comma-separated question ids")
+    ap.add_argument("--mock", action="store_true", help="plumbing check, writes to a temp file")
+    ap.add_argument("--rescore", action="store_true", help="score the saved answers again, no model calls")
+    ap.add_argument("--grounded", action="store_true", help="rerun the grounded side, keep the saved baseline answers")
+    ap.add_argument("--baseline-ids", help="rerun only these baseline questions, comma separated")
     args = ap.parse_args()
+    questions = build()
+    path = ROOT / "eval" / "results.json"
+    partial = args.rescore or args.grounded or args.baseline_ids
+    saved = json.loads(path.read_text()) if partial else None
+    answers = {q["id"]: q for q in saved["questions"]} if saved else {}
+
     if args.mock:
         grounded_llm = baseline_llm = MockLLM()
+    elif args.rescore:
+        grounded_llm = baseline_llm = None
     else:
         if not os.environ.get("ANTHROPIC_API_KEY"):
             sys.exit("ANTHROPIC_API_KEY is not set")
-        grounded_llm, baseline_llm = AnthropicLLM(timeout=200), AnthropicLLM(timeout=600)
+        grounded_llm, baseline_llm = AnthropicLLM(timeout=200), AnthropicLLM(timeout=900)
 
-    questions = build()
-    if args.only:
-        wanted = set(args.only.split(","))
-        questions = [q for q in questions if q["id"] in wanted]
     system = BASELINE_SYSTEM + raw_csv()
+    rerun = set(args.baseline_ids.split(",")) if args.baseline_ids else set()
 
     def baseline(q):
         if args.mock:
             return {"answer_type": "answer", "text": "mock", "usage": {}, "latency_s": 0}
+        if saved and q["id"] not in rerun:
+            return answers[q["id"]]["baseline"]
         return ask_baseline(baseline_llm, q, system)
 
+    def grounded(q):
+        if args.rescore or (saved and not args.grounded):
+            return answers[q["id"]]["grounded"]
+        return ask_grounded(grounded_llm, q)
+
     # One call first, so the data block is in the prompt cache before the rest run in parallel
-    rows = []
     first = baseline(questions[0])
     with ThreadPoolExecutor(max_workers=1 if args.mock else 5) as pool:
         base = [first] + list(pool.map(baseline, questions[1:]))
-        ground = list(pool.map(lambda q: ask_grounded(grounded_llm, q), questions))
+        ground = list(pool.map(grounded, questions))
+    rows = []
     for q, b, g in zip(questions, base, ground):
         rows.append({**q, "baseline": {**b, **score(q, b["answer_type"], b["text"])},
                      "grounded": {**g, **score(q, g["answer_type"], g["text"])}})
         print(q["id"], "base", rows[-1]["baseline"]["correct"], rows[-1]["baseline"]["unsupported"],
               "| grounded", rows[-1]["grounded"]["correct"], rows[-1]["grounded"]["unsupported"], flush=True)
 
-    result = {
-        "generated_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+    meta = {
+        "generated_at": saved["generated_at"] if args.rescore else dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "mode": "mock" if args.mock else "real",
         "model": MODEL, "prompt_version": PROMPT_VERSION,
         "effort": {"baseline": BASELINE_EFFORT, "grounded": EFFORT},
         "baseline_prompt_chars": len(system),
-        "summary": {"baseline": summarise(rows, "baseline"), "grounded": summarise(rows, "grounded")},
-        "questions": rows,
     }
-    path = Path(tempfile.gettempdir()) / "grounded-eval-mock.json" if args.mock or args.only else ROOT / "eval" / "results.json"
-    path.write_text(json.dumps(result, indent=1, ensure_ascii=False, default=str))
-    print(json.dumps(result["summary"], indent=1))
-    print("wrote", path)
+    finish(rows, meta, Path(tempfile.gettempdir()) / "grounded-eval-mock.json" if args.mock else path)
 
 
 if __name__ == "__main__":

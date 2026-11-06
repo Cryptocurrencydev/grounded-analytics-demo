@@ -1,0 +1,12 @@
+line-length = 130
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "I", "B"]
+ignore = ["E731", "B008", "E501", "B905"]
+
+[lint.per-file-ignores]
+"scripts/*" = ["E402"]
+"eval/run_eval.py" = ["E402"]
+"api/*" = ["E402"]
+"tests/py/conftest.py" = ["E402"]

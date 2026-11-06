@@ -9,6 +9,7 @@ Rules, for every claim:
   6. "Significant" needs a cited stat whose test was significant. "Not significant" needs one that was not.
   7. A segment or question named in the text is on a cited stat or in the active filter.
   8. No causal language. A survey aggregate cannot show why something happened.
+  9. Workload is scored by how manageable it is, so "workload fell" reads backwards and fails.
 
 Rounding: figures have a canonical rounded value, the same one the charts show. A claim may quote it
 exactly or coarsen it with round-half-up: 3.85 may appear as 3.85 or 3.9, never 3.8. More digits than
@@ -29,6 +30,8 @@ VALID_PERIODS = {q[-2:] + q[:4] for q in QUARTERS}
 _PERIOD = re.compile(
     r"\bQ([1-4])\s*[/\- ]?\s*(20\d{2})\b|\b(20\d{2})\s*[/\- ]?\s*Q([1-4])\b|\b([1-4])\.\s*Quartal\s+(20\d{2})\b"
 )
+_SCALE = re.compile(r"(?<![\d.,])1\s?(?:-|–|to|bis)\s?5(?![\d.,]*\d)")  # the survey's own scale
+_ALL_QUARTERS = re.compile(r"\b(?:all|across|over|alle|allen|über)\s+6\s+(?:quarters|Quartale\w*)", re.I)  # the scope label
 _YEAR = re.compile(r"\b(" + "|".join(YEARS) + r")\b")
 _NUMBER = re.compile(r"(?<![\w.,])([+\-−]?)(\d{1,3}(?:[.,]\d{3})+(?:[.,]\d+)?|\d+(?:[.,]\d+)?)(?![\w])")
 _PCT_AFTER = re.compile(r"\s*(%|percent\b|per cent\b|prozent\b)", re.IGNORECASE)
@@ -54,6 +57,8 @@ _SIGNIFICANT = re.compile(r"\b(statistically significant|significant\w*|signifik
 _NOT_SIGNIFICANT = re.compile(
     r"\b(not|no|without|nicht|keine?\w*|ohne)\s+(?:\w+\s+){0,3}?(statistically\s+)?(significant|signifikant)\w*|\binsignificant\b", re.IGNORECASE
 )
+_WORKLOAD = re.compile(r"\b(workload|arbeitsbelastung)\b", re.I)
+_MANAGEABLE = re.compile(r"manageab|bewältigbar", re.I)
 _CAUSAL = re.compile(
     r"\b(because|due to|caused by|causes|driven by|as a result of|leads? to|led to|thanks to"
     r"|weil|aufgrund|wegen|verursacht\w*|zurückzuführen|infolge|führt zu|führte zu|dank)\b", re.IGNORECASE,
@@ -96,6 +101,8 @@ def _mask_periods(text: str) -> tuple[str, list[str]]:
         return " " * len(m.group(0))
 
     masked = _PERIOD.sub(replace, text)
+    masked = _SCALE.sub(lambda m: " " * len(m.group(0)), masked)
+    masked = _ALL_QUARTERS.sub(lambda m: " " * len(m.group(0)), masked)
     return _YEAR.sub(lambda m: " " * len(m.group(0)), masked), bad
 
 
@@ -209,11 +216,15 @@ def validate(claims: list[Claim], stats: dict[str, Stat], lang: str, scope: list
             if says_down and not says_up and all(s.direction == "up" for s in deltas):
                 flag("direction_mismatch", "Text says down, every cited change is up")
 
+        if _WORKLOAD.search(claim.text) and (_UP.search(claim.text) or _DOWN.search(claim.text)) and not _MANAGEABLE.search(claim.text):
+            flag("ambiguous_polarity", "A rise in this score means workload is more manageable: say manageable workload")
+
         negated = _NOT_SIGNIFICANT.search(claim.text)
         positive = _SIGNIFICANT.search(_NOT_SIGNIFICANT.sub(" ", claim.text))
-        if positive and not any(s.significant is True for s in cited):
+        tally = any(s.key.endswith("significant_changes") for s in cited)  # counts both outcomes
+        if positive and not tally and not any(s.significant is True for s in cited):
             flag("unsupported_significance", "Says significant, no cited test was")
-        if negated and not any(s.significant is False for s in cited):
+        if negated and not tally and not any(s.significant is False for s in cited):
             flag("unsupported_significance", "Says not significant, no cited test supports it")
 
         known = set(in_scope)

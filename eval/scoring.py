@@ -3,6 +3,7 @@ answer_type, which both systems return from the same schema."""
 from __future__ import annotations
 
 import re
+from decimal import Decimal
 
 from grounded.models import Number
 from grounded.validator import extract_numbers, matches
@@ -11,7 +12,9 @@ REFUSED = {"cannot_answer", "insufficient_data"}
 _NOT_SIG = re.compile(r"\b(not|no|isn't|without|n't)\b[^.]{0,40}\bsignifican|\binsignificant\b|\bno statistically\b", re.IGNORECASE)
 _SIG = re.compile(r"\bsignifican", re.IGNORECASE)
 # Figures any honest answer may mention, on top of the question's own context
-FREE = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30}
+FREE = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30}
+ALPHA = Decimal("0.05")
+_P_APPROX = re.compile(r"\bp\s*[≈~]\s*$", re.I)
 
 
 def _number(f: dict) -> Number:
@@ -29,11 +32,11 @@ def score(q: dict, answer_type: str, text: str) -> dict:
     tokens = extract_numbers(text, "en")
     question_numbers = {t.value for t in extract_numbers(q["question"], "en")}
     refused = answer_type in REFUSED
-    known = [_number(f) for f in q["expected"] + q["context"]]
+    known = [_number(f) for f in q["expected"] + q["context"] + q.get("truth_table", [])]
 
     unsupported = []
     for t in tokens:
-        if t.p_op or t.value in question_numbers:
+        if t.p_op or t.value in question_numbers or t.value == ALPHA or _P_APPROX.search(text.split(t.raw)[0]):
             continue  # p-values depend on the test chosen, so they are not scored as figures
         if any(_quote_matches(t, n) for n in known):
             continue
@@ -76,6 +79,7 @@ def summarise(rows: list[dict], key: str) -> dict:
         "unsupported_figures": sum(len(r[key]["unsupported"]) for r in rows),
         "over_refusals": per(answerable, lambda a: a["refused"]),
         "withheld": per(rows, lambda a: a["answer_type"] == "unverified"),
+        "no_answer": per(rows, lambda a: a["answer_type"] == "error"),
         "regenerated": per(rows, lambda a: a.get("attempts", 1) > 1),
         "input_tokens": sum(u.get("input_tokens", 0) + u.get("cache_read_tokens", 0) + u.get("cache_write_tokens", 0) for u in usage),
         "output_tokens": sum(u.get("output_tokens", 0) for u in usage),

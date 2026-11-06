@@ -1,0 +1,2215 @@
+{
+ "generated_at": "2026-11-06T19:58:48+00:00",
+ "mode": "real",
+ "model": "claude-opus-5-5",
+ "prompt_version": "v2",
+ "effort": {
+  "baseline": "medium",
+  "grounded": "low"
+ },
+ "baseline_prompt_chars": 331159,
+ "summary": {
+  "baseline": {
+   "questions": 34,
+   "numeric_total": 20,
+   "numeric_correct": 18,
+   "significance_total": 4,
+   "significance_correct": 3,
+   "refusal_total": 10,
+   "refusal_correct": 10,
+   "answers_with_unsupported_figures": 11,
+   "unsupported_figures": 26,
+   "over_refusals": 0,
+   "withheld": 0,
+   "no_answer": 0,
+   "regenerated": 0,
+   "input_tokens": 5840917,
+   "output_tokens": 415008,
+   "mean_latency_s": 88.5
+  },
+  "grounded": {
+   "questions": 34,
+   "numeric_total": 20,
+   "numeric_correct": 20,
+   "significance_total": 4,
+   "significance_correct": 4,
+   "refusal_total": 10,
+   "refusal_correct": 10,
+   "answers_with_unsupported_figures": 0,
+   "unsupported_figures": 0,
+   "over_refusals": 0,
+   "withheld": 0,
+   "no_answer": 0,
+   "regenerated": 2,
+   "input_tokens": 234029,
+   "output_tokens": 7851,
+   "mean_latency_s": 4.6
+  }
+ },
+ "questions": [
+  {
+   "id": "n01",
+   "category": "numeric",
+   "question": "What is the mean overall satisfaction score across all responses?",
+   "expected": [
+    {
+     "name": "mean",
+     "value": 3.7016666666666667,
+     "unit": "scale",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 3000.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "The mean overall satisfaction score (q_satisfaction, on a 1-5 scale) is 3.70 across all 3,000 responses, covering 2025-Q2 to 2026-Q3. The scores sum to 11,093. I added them up by hand, so a small slip is possible, but the figure should round to about 3.70.",
+    "usage": {
+     "input_tokens": 24,
+     "output_tokens": 12217,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 171764
+    },
+    "latency_s": 107.9,
+    "refused": false,
+    "unsupported": [
+     "11,093"
+    ],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "The mean overall satisfaction score across all 3000 responses from all 6 quarters is 3.7 on the 1-5 scale.",
+    "usage": {
+     "input_tokens": 7239,
+     "output_tokens": 206,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.1,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n02",
+   "category": "numeric",
+   "question": "How many responses were submitted in Q3 2026?",
+   "expected": [
+    {
+     "name": "n",
+     "value": 500.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "context": [],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "500 responses were submitted in Q3 2026 (2026-Q3), response IDs R02501 to R03000.",
+    "usage": {
+     "input_tokens": 22,
+     "output_tokens": 110,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 4.2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "The survey received 500 responses in Q3 2026.",
+    "usage": {
+     "input_tokens": 7213,
+     "output_tokens": 180,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.9,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 1,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n03",
+   "category": "numeric",
+   "question": "What is the overall employee NPS?",
+   "expected": [
+    {
+     "name": "nps",
+     "value": -23.900000000000002,
+     "unit": "nps",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 3000.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "Overall employee NPS is -23.9, across all 3,000 responses from 2025-Q2 to 2026-Q3. About 16.4% are promoters (493 people scoring 9-10) and 40.4% are detractors (1,211 people scoring 0-6). The remaining 43.2% (1,296) are passives. These counts come from tallying the 3,000 rows by hand, so they may be off by a small margin.",
+    "usage": {
+     "input_tokens": 17,
+     "output_tokens": 19123,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 160.0,
+    "refused": false,
+    "unsupported": [
+     "493",
+     "1,211",
+     "43.2",
+     "1,296"
+    ],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "The overall employee NPS across all 6 quarters is -23.9, based on 3000 responses.",
+    "usage": {
+     "input_tokens": 7204,
+     "output_tokens": 188,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.9,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n04",
+   "category": "numeric",
+   "question": "What was the employee NPS in Q3 2026?",
+   "expected": [
+    {
+     "name": "nps",
+     "value": -20.8,
+     "unit": "nps",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 500.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "The employee NPS for Q3 2026 was -20.8, from 500 responses. 94 were promoters (18.8%, scores 9-10) and 198 were detractors (39.6%, scores 0-6). The remaining 208 were passives (scores 7-8).",
+    "usage": {
+     "input_tokens": 22,
+     "output_tokens": 4430,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 34.2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In Q3 2026, the employee NPS was -20.8, based on 500 responses.",
+    "usage": {
+     "input_tokens": 7215,
+     "output_tokens": 190,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.5,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n05",
+   "category": "numeric",
+   "question": "What is the mean workload score for Operations in 2026?",
+   "expected": [
+    {
+     "name": "mean",
+     "value": 2.807065217391304,
+     "unit": "scale",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 368.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "The mean workload score (\"my workload is manageable\", 1-5 scale) for Operations in 2026 is 2.81. This is based on 368 Operations responses from 2026-Q1 to 2026-Q3, which are the only 2026 quarters in the data. The total of their workload scores is 1,033. By quarter, the means were 3.01 in Q1 (114 responses), 2.82 in Q2 (130) and 2.60 in Q3 (124). The figures come from a careful manual tally of the rows, so treat them as very close rather than exact.",
+    "usage": {
+     "input_tokens": 23,
+     "output_tokens": 11855,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 86.6,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In 2026, Operations had a mean manageable workload score of 2.81 on the 1-5 scale, based on 368 responses.",
+    "usage": {
+     "input_tokens": 7232,
+     "output_tokens": 205,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.8,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n06",
+   "category": "numeric",
+   "question": "What is the mean trust-in-leadership score in the North region in Q3 2026?",
+   "expected": [
+    {
+     "name": "mean",
+     "value": 3.9328859060402683,
+     "unit": "scale",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 149.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "The mean trust-in-leadership score (q_leadership) in the North region in 2026-Q3 is 3.93 on the 1-5 scale, based on 149 responses. This is a hand tally of the raw rows, so treat it as approximate.",
+    "usage": {
+     "input_tokens": 32,
+     "output_tokens": 5034,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 42.0,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In Q3 2026, the mean trust-in-leadership score in the North region is 3.93 on the 1-5 scale, based on 149 responses.",
+    "usage": {
+     "input_tokens": 7260,
+     "output_tokens": 214,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.0,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n07",
+   "category": "numeric",
+   "question": "What percentage of Engineering respondents agree or strongly agree with the career growth question?",
+   "expected": [
+    {
+     "name": "pct",
+     "value": 43.309859154929576,
+     "unit": "pct",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 852.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "43.3% of Engineering respondents agree or strongly agree (a score of 4 or 5) with the career growth question. That is 369 of 852 Engineering responses, across all quarters from 2025-Q2 to 2026-Q3. I counted these rows by hand, so the result could be off by a response or two.",
+    "usage": {
+     "input_tokens": 33,
+     "output_tokens": 16765,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 114.9,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "Across all 6 quarters, 43.3% of Engineering respondents agree or strongly agree with the career growth question (n = 852).",
+    "usage": {
+     "input_tokens": 7268,
+     "output_tokens": 209,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.4,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n08",
+   "category": "numeric",
+   "question": "What percentage of Operations respondents in the South disagreed or strongly disagreed that their workload is manageable in 2026?",
+   "expected": [
+    {
+     "name": "pct",
+     "value": 44.44444444444444,
+     "unit": "pct",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 90.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "In 2026 (Q1 to Q3), 44.4% of South Operations respondents disagreed or strongly disagreed that their workload is manageable. That is 40 of 90 respondents who scored workload 1 or 2. By quarter, the counts were 11 of 27 in Q1, 10 of 26 in Q2 and 19 of 37 in Q3. The three-quarter total meets the 30-response minimum, but Q1 and Q2 on their own fall below it, so no percentage is given for those quarters.",
+    "usage": {
+     "input_tokens": 45,
+     "output_tokens": 1477,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 13.3,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In 2026, 44.4% of Operations respondents in the South disagreed or strongly disagreed that their workload is manageable (n = 90).",
+    "usage": {
+     "input_tokens": 7289,
+     "output_tokens": 213,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.1,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n09",
+   "category": "numeric",
+   "question": "How many responses came from the Sales department in total?",
+   "expected": [
+    {
+     "name": "n",
+     "value": 635.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "context": [],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "There were 635 responses from the Sales department in total, across all six quarters from 2025-Q2 to 2026-Q3. This comes from a row-by-row manual count of 3,000 rows, so it may be off by a few.",
+    "usage": {
+     "input_tokens": 20,
+     "output_tokens": 19461,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 135.8,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "The Sales department submitted 635 responses in total across all 6 quarters.",
+    "usage": {
+     "input_tokens": 7221,
+     "output_tokens": 184,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 3.3,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 1,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n10",
+   "category": "numeric",
+   "question": "What is the mean wellbeing score in the West region?",
+   "expected": [
+    {
+     "name": "mean",
+     "value": 3.588477366255144,
+     "unit": "scale",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 729.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "The mean wellbeing score in the West region is 3.36 on the 1-5 scale. This is based on about 779 West responses across all quarters, from 2025-Q2 to 2026-Q3. The figure comes from a manual tally of every West row, so a miscount of one or two rows is possible, but it would not move the mean by more than about 0.01.",
+    "usage": {
+     "input_tokens": 22,
+     "output_tokens": 19664,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 142.2,
+    "refused": false,
+    "unsupported": [
+     "3.36",
+     "779",
+     "0.01"
+    ],
+    "correct": false
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In the West region, the mean wellbeing score across all 6 quarters is 3.59 on the 1-5 scale, based on 729 responses.",
+    "usage": {
+     "input_tokens": 7238,
+     "output_tokens": 209,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.8,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n11",
+   "category": "numeric",
+   "question": "What share of Support respondents were NPS detractors in 2025?",
+   "expected": [
+    {
+     "name": "pct",
+     "value": 44.583333333333336,
+     "unit": "pct",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 240.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "In 2025 (2025-Q2 to 2025-Q4), 44.6% of Support respondents were NPS detractors, meaning they gave a score of 0 to 6. That is 107 of 240 Support responses. These counts come from a manual pass through the rows, so treat the exact figure as approximate.",
+    "usage": {
+     "input_tokens": 26,
+     "output_tokens": 3636,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 32.7,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In 2025, 44.6% of Support respondents were NPS detractors (n = 240).",
+    "usage": {
+     "input_tokens": 7227,
+     "output_tokens": 192,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.6,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n12",
+   "category": "numeric",
+   "question": "What share of all comments fall into the most common comment theme?",
+   "expected": [
+    {
+     "name": "pct",
+     "value": 25.547445255474454,
+     "unit": "pct",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "count",
+     "value": 350.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "comments",
+     "value": 1370.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "The most common comment theme is workload_pressure. It accounts for 350 of the 1,370 responses that carry a comment theme, which is 25.5% of all comments. The other themes have these counts: career_paths 233, leadership_comms 225, recognition_pay 191, tools_systems 157, flexible_work 133 and team_culture 81. These counts come from tallying all 3,000 rows by hand, so they could be off by a few, but workload_pressure leads clearly.",
+    "usage": {
+     "input_tokens": 23,
+     "output_tokens": 22750,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 158.8,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "The most common comment theme is Workload pressure, with 350 of 1370 comments, or 25.5% of all comments. The next most common theme is Career paths, with 17.0% of comments.",
+    "usage": {
+     "input_tokens": 11901,
+     "output_tokens": 382,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 2,
+    "rejected_issues": [
+     "number_not_in_cited_stat: 6 matches C07, which is not cited"
+    ],
+    "latency_s": 7.7,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 2,
+    "validator_numbers": 4,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n13",
+   "category": "numeric",
+   "question": "What is the mean recognition score among Directors?",
+   "expected": [
+    {
+     "name": "mean",
+     "value": 3.4065934065934065,
+     "unit": "scale",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "n",
+     "value": 91.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "The mean recognition score among Directors is 3.41 out of 5, based on 90 Director responses across all quarters. This comes from a manual tally of the 90 Director rows I identified, so a missed row could shift it slightly.",
+    "usage": {
+     "input_tokens": 20,
+     "output_tokens": 3246,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 24.6,
+    "refused": false,
+    "unsupported": [
+     "90",
+     "90"
+    ],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "Across all 6 quarters, Directors have a mean recognition score of 3.41 on the 1-5 scale, based on 91 responses.",
+    "usage": {
+     "input_tokens": 7232,
+     "output_tokens": 207,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 3.6,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n14",
+   "category": "numeric",
+   "question": "Which department has the lowest mean workload score, and what is that score?",
+   "expected": [
+    {
+     "name": "mean",
+     "value": 2.9891156462585036,
+     "unit": "scale",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "Engineering",
+     "value": 3.4530516431924885,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "Finance",
+     "value": 3.6755725190839694,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "Operations",
+     "value": 2.9891156462585036,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "Sales",
+     "value": 3.3716535433070867,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "Support",
+     "value": 3.393410852713178,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "Engineering",
+     "value": 852.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "Finance",
+     "value": 262.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "Operations",
+     "value": 735.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "Sales",
+     "value": 635.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "Support",
+     "value": 516.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "Operations has the lowest mean workload score at 2.99 across 735 responses. The next lowest is Sales at about 3.37, so the gap is wide. A score of 2.99 sits just below the neutral midpoint, which means Operations staff on average lean slightly towards disagreeing that their workload is manageable. These figures come from a manual tally of all 3,000 responses, so small rounding or counting slips are possible, but they would not change which department ranks lowest.",
+    "usage": {
+     "input_tokens": 26,
+     "output_tokens": 53022,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 171764
+    },
+    "latency_s": 368.1,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "Operations has the lowest mean manageable workload score of all departments: 2.99 on the 1-5 scale, from 735 responses across all quarters. The other departments score higher: Sales 3.37, Support 3.39, Engineering 3.45 and Finance 3.68 (the highest).",
+    "usage": {
+     "input_tokens": 7502,
+     "output_tokens": 278,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.8,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 5,
+    "validator_numbers": 6,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "n15",
+   "category": "numeric",
+   "question": "Which region has the highest employee NPS, and what is it?",
+   "expected": [
+    {
+     "name": "nps",
+     "value": -19.334719334719335,
+     "unit": "nps",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "North",
+     "value": -25.02639915522703,
+     "unit": "nps",
+     "decimals": 1
+    },
+    {
+     "name": "East",
+     "value": -19.334719334719335,
+     "unit": "nps",
+     "decimals": 1
+    },
+    {
+     "name": "West",
+     "value": -27.297668038408773,
+     "unit": "nps",
+     "decimals": 1
+    },
+    {
+     "name": "South",
+     "value": -22.301304863582445,
+     "unit": "nps",
+     "decimals": 1
+    },
+    {
+     "name": "North",
+     "value": 947.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "East",
+     "value": 481.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "West",
+     "value": 729.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "South",
+     "value": 843.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "East has the highest NPS, at -19.3, though every region's score is negative. Across all 3,000 responses (2025-Q2 to 2026-Q3), East had 87 promoters and 180 detractors out of 481 responses. The other regions:\n- South: -22.3 (145 promoters, 333 detractors, n=843)\n- North: -25.0 (160 promoters, 397 detractors, n=947)\n- West: -27.0 (105 promoters, 302 detractors, n=729)\n\nThese figures come from a manual tally of the raw rows, so a small counting slip is possible. East's 3-point lead over South is modest, and no significance test was run.",
+    "usage": {
+     "input_tokens": 24,
+     "output_tokens": 48740,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 171764
+    },
+    "latency_s": 330.4,
+    "refused": false,
+    "unsupported": [
+     "-27.0"
+    ],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "East has the highest employee NPS of all regions, at -19.3 (n = 481). Its NPS is still negative. The other regions are South at -22.3, North at -25.0 and West at -27.3, which is the lowest.",
+    "usage": {
+     "input_tokens": 11465,
+     "output_tokens": 430,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 2,
+    "rejected_issues": [
+     "number_not_found: 4 matches no figure on the cited stats"
+    ],
+    "latency_s": 7.4,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 4,
+    "validator_numbers": 5,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "c01",
+   "category": "comparison",
+   "question": "How much lower is the mean workload score in Operations than in Finance?",
+   "expected": [
+    {
+     "name": "difference",
+     "value": 0.6864568728254659,
+     "unit": "scale_delta",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "Finance",
+     "value": 3.6755725190839694,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "Operations",
+     "value": 2.9891156462585036,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "n Finance",
+     "value": 262.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n Operations",
+     "value": 735.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "Operations' mean workload score is about 0.69 points lower than Finance's, on a 1-5 scale where higher means a more manageable workload. Across all quarters, Operations averages 2.99 (733 responses) and Finance averages 3.68 (262 responses). These figures come from a manual tally of the dataset, so the second decimal could be slightly off.",
+    "usage": {
+     "input_tokens": 27,
+     "output_tokens": 16675,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 118.1,
+    "refused": false,
+    "unsupported": [
+     "733"
+    ],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "The mean manageable workload score is 0.69 points lower in Operations (2.99) than in Finance (3.68), and the difference is statistically significant.",
+    "usage": {
+     "input_tokens": 7341,
+     "output_tokens": 253,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.7,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 1,
+    "validator_numbers": 3,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "c02",
+   "category": "comparison",
+   "question": "By how much did the mean trust-in-leadership score in the North change between 2025 and 2026?",
+   "expected": [
+    {
+     "name": "difference",
+     "value": 0.31867753363870577,
+     "unit": "scale_delta",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "2026",
+     "value": 3.847695390781563,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "2025",
+     "value": 3.529017857142857,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "n 2026",
+     "value": 499.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n 2025",
+     "value": 448.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "In the North, mean trust in leadership (q_leadership) rose by about 0.32 points, from 3.53 in 2025 to 3.85 in 2026. The 2025 figure covers 447 responses from 2025-Q2 to Q4. The 2026 figure covers 499 responses from 2026-Q1 to Q3. The two years are not fully comparable: 2025 has no Q1 data and 2026 has no Q4 data. No significance test was run, so this does not say whether the rise is statistically significant.",
+    "usage": {
+     "input_tokens": 36,
+     "output_tokens": 24388,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 176.7,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In the North, the mean trust-in-leadership score rose from 3.53 in 2025 to 3.85 in 2026. That is a change of -0.32 points when 2026 is subtracted from 2025. This rise in the North is statistically significant, based on 947 responses (448 in 2025 and 499 in 2026).",
+    "usage": {
+     "input_tokens": 7365,
+     "output_tokens": 480,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 6.5,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 2,
+    "validator_numbers": 6,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "c03",
+   "category": "comparison",
+   "question": "What is the difference in employee NPS between Sales and Support?",
+   "expected": [
+    {
+     "name": "difference",
+     "value": 12.837087224562044,
+     "unit": "nps_delta",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "Sales",
+     "value": -17.00787401574803,
+     "unit": "nps",
+     "decimals": 1
+    },
+    {
+     "name": "Support",
+     "value": -29.844961240310074,
+     "unit": "nps",
+     "decimals": 1
+    },
+    {
+     "name": "n Sales",
+     "value": 635.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n Support",
+     "value": 516.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "Sales has an NPS 12.7 points higher than Support, though both are negative. This covers all quarters in the data.\n\n| Department | Responses | Promoters (9-10) | Detractors (0-6) | NPS |\n|---|---|---|---|---|\n| Sales | 633 | 123 | 231 | -17.1 |\n| Support | 517 | 76 | 230 | -29.8 |\n\nSo -17.1 minus -29.8 gives 12.7 points. These counts were tallied by hand from the raw rows, so treat the exact figures as approximate.",
+    "usage": {
+     "input_tokens": 25,
+     "output_tokens": 21232,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 148.6,
+    "refused": false,
+    "unsupported": [
+     "633",
+     "123",
+     "517"
+    ],
+    "correct": false
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "Employee NPS is 12.8 points higher in Sales than in Support, and the difference is statistically significant. Sales has an employee NPS of -17.0 (n=635) and Support has -29.8 (n=516).",
+    "usage": {
+     "input_tokens": 7325,
+     "output_tokens": 286,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.5,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 2,
+    "validator_numbers": 5,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "c04",
+   "category": "comparison",
+   "question": "How many percentage points did agreement with the recognition question change in Support from Q2 2026 to Q3 2026?",
+   "expected": [
+    {
+     "name": "difference",
+     "value": 7.520429009193048,
+     "unit": "pp",
+     "decimals": 1
+    }
+   ],
+   "context": [
+    {
+     "name": "Q3",
+     "value": 38.20224719101123,
+     "unit": "pct",
+     "decimals": 1
+    },
+    {
+     "name": "Q2",
+     "value": 30.681818181818183,
+     "unit": "pct",
+     "decimals": 1
+    },
+    {
+     "name": "n Q3",
+     "value": 89.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n Q2",
+     "value": 88.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "Agreement with the recognition question in Support rose by about 7.5 percentage points from 2026-Q2 to 2026-Q3. In 2026-Q2, 27 of 88 Support respondents agreed (scored 4 or 5), which is 30.7%. In 2026-Q3, 34 of 89 agreed, which is 38.2%. Both quarters have more than 30 responses, so the figures can be reported.",
+    "usage": {
+     "input_tokens": 42,
+     "output_tokens": 6406,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 44.9,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In Support, the share agreeing with the recognition question rose by 7.5 percentage points, from 30.7% in Q2 2026 to 38.2% in Q3 2026. This change is not statistically significant.",
+    "usage": {
+     "input_tokens": 7394,
+     "output_tokens": 283,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.3,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 1,
+    "validator_numbers": 3,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "c05",
+   "category": "comparison",
+   "question": "How much did the mean workload score in Operations change between 2025 and 2026?",
+   "expected": [
+    {
+     "name": "difference",
+     "value": 0.36459690794929545,
+     "unit": "scale_delta",
+     "decimals": 2
+    }
+   ],
+   "context": [
+    {
+     "name": "2026",
+     "value": 2.807065217391304,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "2025",
+     "value": 3.1716621253405997,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "n 2026",
+     "value": 368.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n 2025",
+     "value": 367.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": null,
+   "names": [],
+   "baseline": {
+    "answer_type": "answer",
+    "text": "The mean workload score in Operations fell by 0.36 points, from 3.17 in 2025 to 2.81 in 2026. Higher scores mean staff find their workload more manageable, so the drop means it feels less manageable. The 2025 figure covers 366 responses from Q2 to Q4, and the 2026 figure covers 367 responses from Q1 to Q3. The two years cover different quarters, so seasonal effects could account for some of the gap. I did not run a significance test.",
+    "usage": {
+     "input_tokens": 30,
+     "output_tokens": 15797,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 113.7,
+    "refused": false,
+    "unsupported": [
+     "366"
+    ],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In Operations, the mean manageable workload score fell significantly by 0.36 points, from 3.17 in 2025 to 2.81 in 2026. The comparison is based on 367 responses in 2025 and 368 in 2026.",
+    "usage": {
+     "input_tokens": 7353,
+     "output_tokens": 295,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.1,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 2,
+    "validator_numbers": 5,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "s01",
+   "category": "significance",
+   "question": "Is the difference in mean workload between Operations and Finance statistically significant?",
+   "expected": [],
+   "context": [
+    {
+     "name": "Operations",
+     "value": 2.9891156462585036,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "Finance",
+     "value": 3.6755725190839694,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "difference",
+     "value": 0.6864568728254659,
+     "unit": "scale_delta",
+     "decimals": 2
+    },
+    {
+     "name": "n Operations",
+     "value": 735.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n Finance",
+     "value": 262.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": true,
+   "names": [],
+   "p": 5.957628143888884e-23,
+   "baseline": {
+    "answer_type": "answer",
+    "text": "Yes, the difference is statistically significant. Finance has a mean workload score of 3.68 (n = 262) and Operations has 2.99 (n = 735), so Finance is 0.69 points higher. Workload is the 'my workload is manageable' item, so higher means more manageable. A Welch t-test gives t ≈ 10.4 with about 475 degrees of freedom and p < 0.001, well below alpha 0.05. These figures pool all six quarters, 2025-Q2 through 2026-Q3. I tallied them by hand from the raw rows, so the second decimal could be slightly off, but that would not change the conclusion.",
+    "usage": {
+     "input_tokens": 30,
+     "output_tokens": 31186,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 225.7,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "Yes. Mean manageable workload is 2.99 in Operations and 3.68 in Finance. Operations is 0.69 points lower, and this difference is statistically significant. The comparison uses 735 responses from Operations and 262 from Finance.",
+    "usage": {
+     "input_tokens": 7347,
+     "output_tokens": 301,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 6.5,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 2,
+    "validator_numbers": 5,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "s02",
+   "category": "significance",
+   "question": "Is the difference in mean satisfaction between the West and East regions statistically significant?",
+   "expected": [],
+   "context": [
+    {
+     "name": "West",
+     "value": 3.6707818930041154,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "East",
+     "value": 3.758835758835759,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "difference",
+     "value": 0.08805386583164365,
+     "unit": "scale_delta",
+     "decimals": 2
+    },
+    {
+     "name": "n West",
+     "value": 729.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n East",
+     "value": 481.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": false,
+   "names": [],
+   "p": 0.09188526274524675,
+   "baseline": {
+    "answer_type": "answer",
+    "text": "No, the difference is not statistically significant. East's mean satisfaction is 3.76 (n = 481) and West's is 3.67 (n = 729), a gap of about 0.09 points. A Welch t-test gives t ≈ 1.69 with about 1,070 degrees of freedom and p ≈ 0.09. That is above the 0.05 threshold, so the difference could plausibly be due to chance. These figures come from a manual count of the rows, so treat them as approximate.",
+    "usage": {
+     "input_tokens": 32,
+     "output_tokens": 29038,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 190.9,
+    "refused": false,
+    "unsupported": [
+     "1,070"
+    ],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "Mean satisfaction is 3.67 in West (n=729) and 3.76 in East (n=481). The difference of -0.09 points is not statistically significant (p=0.092).",
+    "usage": {
+     "input_tokens": 7345,
+     "output_tokens": 262,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.3,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 1,
+    "validator_numbers": 6,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "s03",
+   "category": "significance",
+   "question": "Did mean overall satisfaction change significantly from Q2 2026 to Q3 2026?",
+   "expected": [],
+   "context": [
+    {
+     "name": "Q3",
+     "value": 3.74,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "Q2",
+     "value": 3.6854368932038835,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "difference",
+     "value": 0.054563106796116756,
+     "unit": "scale_delta",
+     "decimals": 2
+    },
+    {
+     "name": "n Q3",
+     "value": 500.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n Q2",
+     "value": 515.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": false,
+   "names": [],
+   "p": 0.3261895567412623,
+   "baseline": {
+    "answer_type": "answer",
+    "text": "Yes. Mean satisfaction rose by about 0.12 points from 2026-Q2 to 2026-Q3, and the change is statistically significant at alpha 0.05.\n\n- **2026-Q2:** mean 3.62 (515 responses, SD about 0.86)\n- **2026-Q3:** mean 3.74 (500 responses, SD about 0.92)\n\nI ran a Welch t-test on the two quarters. It gives t ≈ 2.12 with about 1,005 degrees of freedom, so p ≈ 0.03. That is below 0.05. The difference is still small, at about 0.12 points on the 5-point scale.",
+    "usage": {
+     "input_tokens": 37,
+     "output_tokens": 11704,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 84.6,
+    "refused": false,
+    "unsupported": [
+     "0.12",
+     "3.62",
+     "0.86",
+     "2.12",
+     "1,005",
+     "0.12"
+    ],
+    "correct": false
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "Mean overall satisfaction rose from 3.69 in Q2 2026 to 3.74 in Q3 2026, but the change is not statistically significant (p = 0.326).",
+    "usage": {
+     "input_tokens": 7393,
+     "output_tokens": 272,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.4,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 1,
+    "validator_numbers": 3,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "s04",
+   "category": "significance",
+   "question": "Is the change in mean wellbeing in Operations between 2025 and 2026 statistically significant?",
+   "expected": [],
+   "context": [
+    {
+     "name": "2026",
+     "value": 3.385869565217391,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "2025",
+     "value": 3.6130790190735693,
+     "unit": "scale",
+     "decimals": 2
+    },
+    {
+     "name": "difference",
+     "value": 0.2272094538561782,
+     "unit": "scale_delta",
+     "decimals": 2
+    },
+    {
+     "name": "n 2026",
+     "value": 368.0,
+     "unit": "count",
+     "decimals": 0
+    },
+    {
+     "name": "n 2025",
+     "value": 367.0,
+     "unit": "count",
+     "decimals": 0
+    }
+   ],
+   "refuse": false,
+   "significance": true,
+   "names": [],
+   "p": 0.0009050435627101202,
+   "baseline": {
+    "answer_type": "answer",
+    "text": "Yes. Mean wellbeing in Operations fell from 2025 to 2026, and a Welch t-test finds the drop statistically significant at alpha 0.05.\n\n- 2025 (Q2–Q4): mean 3.61 (n = 369)\n- 2026 (Q1–Q3): mean 3.39 (n = 365)\n- Change: -0.23 points\n- Welch t ≈ -3.31, df ≈ 731, p ≈ 0.001\n\nThe 2026 data runs only through Q3, so the two years cover different quarters.",
+    "usage": {
+     "input_tokens": 38,
+     "output_tokens": 14806,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 108.8,
+    "refused": false,
+    "unsupported": [
+     "369",
+     "365",
+     "-3.31"
+    ],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "answer",
+    "text": "In Operations, mean wellbeing fell from 3.61 in 2025 to 3.39 in 2026, a change of 0.23 points on the 1-5 scale. This fall is statistically significant (p = 0.001, based on 367 responses in 2025 and 368 in 2026).",
+    "usage": {
+     "input_tokens": 7372,
+     "output_tokens": 316,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.7,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 2,
+    "validator_numbers": 6,
+    "refused": false,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "t01",
+   "category": "unanswerable",
+   "question": "What is the average salary in the Sales department?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [],
+   "baseline": {
+    "answer_type": "cannot_answer",
+    "text": "I can't answer this from the survey data because it has no salary information. The dataset holds six 1-5 agreement questions (satisfaction, workload, leadership, growth, recognition, wellbeing), an NPS score, and optional comment themes, but no pay figures. Some comments under the recognition_pay theme mention pay, but they are free-text opinions, not salary amounts. If it would help, I can report Sales' scores on these questions instead, such as its average recognition score.",
+    "usage": {
+     "input_tokens": 19,
+     "output_tokens": 171,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 3.2,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "cannot_answer",
+    "text": "I can't answer this because the survey has no salary or pay data; it covers agreement scores for satisfaction, manageable workload, leadership, growth, recognition and wellbeing, plus employee NPS and comment themes, and you can break these down by region, department and role.",
+    "usage": {
+     "input_tokens": 3491,
+     "output_tokens": 110,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 2.3,
+    "tool_calls": [],
+    "citations": 0,
+    "validator_numbers": 0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "t02",
+   "category": "unanswerable",
+   "question": "What was the employee turnover rate in 2026?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [],
+   "baseline": {
+    "answer_type": "cannot_answer",
+    "text": "The survey data can't show the 2026 employee turnover rate. It has no information on who left the company or on headcount. It only records anonymous survey responses: agreement scores, NPS, themes and comments. Response counts reflect participation, not how many people were employed or how many left, so no turnover figure can be calculated from it.",
+    "usage": {
+     "input_tokens": 21,
+     "output_tokens": 121,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 3.8,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "cannot_answer",
+    "text": "The survey has no turnover data, but it does cover satisfaction, manageable workload, leadership trust, career growth, recognition, wellbeing, employee NPS and comment themes by region, department, role and quarter, so I can look at any of those for 2026.",
+    "usage": {
+     "input_tokens": 3493,
+     "output_tokens": 108,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 2.6,
+    "tool_calls": [],
+    "citations": 0,
+    "validator_numbers": 0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "t03",
+   "category": "unanswerable",
+   "question": "What was the employee NPS in Q1 2024?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [],
+   "baseline": {
+    "answer_type": "cannot_answer",
+    "text": "This can't be answered from the dataset because it contains no Q1 2024 responses. The survey data covers 2025-Q2 through 2026-Q3 only. I can give the NPS for any of those quarters instead, for example 2026-Q1.",
+    "usage": {
+     "input_tokens": 22,
+     "output_tokens": 139,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 3.0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "cannot_answer",
+    "text": "I can't answer this because the survey only covers Q2 2025 through Q3 2026, so there is no employee NPS for Q1 2024, but I can show NPS for any quarter in that range.",
+    "usage": {
+     "input_tokens": 3494,
+     "output_tokens": 88,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 2.0,
+    "tool_calls": [],
+    "citations": 0,
+    "validator_numbers": 0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "t04",
+   "category": "unanswerable",
+   "question": "How does the Legal department compare with Finance on satisfaction?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [],
+   "baseline": {
+    "answer_type": "cannot_answer",
+    "text": "This comparison isn't possible because the survey has no Legal department. Respondents are grouped into Engineering, Finance, Operations, Sales and Support only, so there is no Legal satisfaction score to set against Finance. I can compare Finance with any of the other four departments instead.",
+    "usage": {
+     "input_tokens": 26,
+     "output_tokens": 159,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 2.7,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "cannot_answer",
+    "text": "I can't compare Legal with Finance because the survey has no Legal department, only Engineering, Sales, Operations, Support and Finance, so I can compare satisfaction for Finance against any of those instead.",
+    "usage": {
+     "input_tokens": 3498,
+     "output_tokens": 92,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 1.9,
+    "tool_calls": [],
+    "citations": 0,
+    "validator_numbers": 0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "t05",
+   "category": "unanswerable",
+   "question": "Why did the workload score fall in Operations?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [],
+   "baseline": {
+    "answer_type": "cannot_answer",
+    "text": "This data can't tell us why Operations' workload score changed. The survey records ratings, a theme tag and an optional comment for each response. It has no fields on causes such as staffing levels, headcount changes or policy events, so any explanation would be speculation. I also haven't confirmed that the score actually fell; that would need a quarter-by-quarter comparison of Operations workload ratings. For descriptive context only, Operations comments tagged workload_pressure repeatedly mention being short staffed with overtime becoming normal, shift planning leaving no recovery time after peak weeks, deadlines moving forward without extra staff, and too many parallel projects. These are respondents' own views and do not show what caused any change in the score. I can compare Operations' workload scores across specific quarters and test whether the difference is significant.",
+    "usage": {
+     "input_tokens": 20,
+     "output_tokens": 562,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 12.6,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "cannot_answer",
+    "text": "I can't say why manageable workload changed in Operations, because the survey only records scores and comment themes by region, department, role and quarter, not the causes behind them, though I can show how the Operations manageable workload score moved across quarters or which comment themes came up there.",
+    "usage": {
+     "input_tokens": 3492,
+     "output_tokens": 107,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 2.9,
+    "tool_calls": [],
+    "citations": 0,
+    "validator_numbers": 0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "t06",
+   "category": "unanswerable",
+   "question": "What will the employee NPS be in Q2 2027?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [],
+   "baseline": {
+    "answer_type": "cannot_answer",
+    "text": "I can't answer this from the survey data. The responses run from 2025-Q2 to 2026-Q3, so there are no results for Q2 2027. The question asks for a forecast of a future quarter, and the dataset only records answers people have already given. I can report the NPS for any quarter that was actually surveyed, or show how it has changed across the six quarters on record.",
+    "usage": {
+     "input_tokens": 23,
+     "output_tokens": 135,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 2.4,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "cannot_answer",
+    "text": "I can't forecast future values, and the survey only covers Q2 2025 to Q3 2026, so I can show you employee NPS for any quarter in that range instead.",
+    "usage": {
+     "input_tokens": 3495,
+     "output_tokens": 79,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 2.1,
+    "tool_calls": [],
+    "citations": 0,
+    "validator_numbers": 0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "m01",
+   "category": "tiny_sample",
+   "question": "What is the mean satisfaction among Directors in Finance in Q1 2026?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [
+    3
+   ],
+   "baseline": {
+    "answer_type": "insufficient_data",
+    "text": "Only 3 Finance Directors responded in Q1 2026. That is below the 30-response minimum for reporting, so no mean satisfaction figure is given for this group.",
+    "usage": {
+     "input_tokens": 32,
+     "output_tokens": 167,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 3.0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "insufficient_data",
+    "text": "There are too few responses from Directors in Finance in Q1 2026 to report a mean satisfaction score. The minimum is 30 responses, and this group has fewer than 5.",
+    "usage": {
+     "input_tokens": 7268,
+     "output_tokens": 231,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.6,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "m02",
+   "category": "tiny_sample",
+   "question": "What is the employee NPS among Directors in the East in Q3 2026?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [
+    2
+   ],
+   "baseline": {
+    "answer_type": "insufficient_data",
+    "text": "Only 2 responses came from Directors in the East region in 2026-Q3, below the 30-response minimum, so I can't report an NPS for this group. Widening the slice, for example all East respondents in 2026-Q3 or Directors across all regions, would give enough responses.",
+    "usage": {
+     "input_tokens": 29,
+     "output_tokens": 211,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 3.3,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "insufficient_data",
+    "text": "There are too few responses from Directors in the East in Q3 2026 to report an employee NPS. The minimum is 30 responses, and this group has fewer than 5.",
+    "usage": {
+     "input_tokens": 7235,
+     "output_tokens": 219,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 4.6,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "m03",
+   "category": "tiny_sample",
+   "question": "What is the mean workload score for Team leads in Finance in the West in Q2 2026?",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [
+    1
+   ],
+   "baseline": {
+    "answer_type": "insufficient_data",
+    "text": "I can't report a mean workload score for this group. There is only 1 response from a Team lead in Finance in the West in 2026-Q2, and figures need at least 30 responses. A broader slice, such as all West Finance staff or Finance Team leads across all regions, would have more responses.",
+    "usage": {
+     "input_tokens": 34,
+     "output_tokens": 247,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 4.0,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "insufficient_data",
+    "text": "There are too few responses from Team leads in Finance in the West in Q2 2026 to report a mean manageable workload score. A slice needs at least 30 responses, and this one has fewer than 5.",
+    "usage": {
+     "input_tokens": 7274,
+     "output_tokens": 236,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 3.9,
+    "tool_calls": [
+     "query_aggregate"
+    ],
+    "citations": 1,
+    "validator_numbers": 2,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  },
+  {
+   "id": "m04",
+   "category": "tiny_sample",
+   "question": "Compare mean wellbeing between Managers in Finance and Managers in Support in Q3 2026.",
+   "expected": [],
+   "context": [],
+   "refuse": true,
+   "significance": null,
+   "names": [],
+   "n": [
+    4,
+    12
+   ],
+   "baseline": {
+    "answer_type": "insufficient_data",
+    "text": "I can't make this comparison because both groups are far too small. In Q3 2026 there are only 4 responses from Finance Managers and about a dozen from Support Managers. Both are well below the 30-response minimum, so no wellbeing means are reported for either group and no comparison or significance test is possible.",
+    "usage": {
+     "input_tokens": 39,
+     "output_tokens": 334,
+     "cache_read_tokens": 171764,
+     "cache_write_tokens": 0
+    },
+    "latency_s": 3.7,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   },
+   "grounded": {
+    "answer_type": "insufficient_data",
+    "text": "I can't compare mean wellbeing for Managers in Finance and Managers in Support in Q3 2026. Too few people answered for either group to give a reliable figure. The minimum is 30 responses per group, and Finance Managers had fewer than 5. Support Managers had only 12 responses in Q3 2026, which is also below the minimum of 30.",
+    "usage": {
+     "input_tokens": 7348,
+     "output_tokens": 346,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 0
+    },
+    "attempts": 1,
+    "rejected_issues": [],
+    "latency_s": 5.4,
+    "tool_calls": [
+     "compare_segments"
+    ],
+    "citations": 2,
+    "validator_numbers": 4,
+    "refused": true,
+    "unsupported": [],
+    "correct": true
+   }
+  }
+ ]
+}

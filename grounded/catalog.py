@@ -58,6 +58,11 @@ THEMES = {
     "flexible_work": {"en": "Flexible work", "de": "Flexibles Arbeiten"},
     "team_culture": {"en": "Team culture", "de": "Teamkultur"},
 }
+# A theme's name can contain a question's word, as in "Workload pressure"
+THEME_ENTITIES = {
+    "workload_pressure": ["q:workload"], "leadership_comms": ["q:leadership"],
+    "career_paths": ["q:growth"], "recognition_pay": ["q:recognition"],
+}
 LABELS_DE = {
     "North": "Nord", "South": "Süd", "East": "Ost", "West": "West",
     "Engineering": "Entwicklung", "Sales": "Vertrieb", "Operations": "Betrieb",

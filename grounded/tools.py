@@ -13,6 +13,7 @@ from .catalog import (
     MIN_N_INTERPRET,
     QUARTERS,
     QUESTIONS,
+    THEME_ENTITIES,
     THEMES,
     YEARS,
     Department,
@@ -208,6 +209,7 @@ def _themes(f: Filters, ledger: Ledger) -> dict:
         s = ledger.add(key=f"theme.{theme}", kind="aggregate", label=name, value=round_half_up(100 * c / total, 1),
                        unit="pct", decimals=1, n=total,
                        related=[Number(name="comments_in_theme", value=c, unit="count", decimals=0)],
+                       entities=THEME_ENTITIES.get(theme, []),
                        chart=ChartRef(chart="themes", categories=[theme]))
         rows.append({**s.for_llm(), "status": "ok"})
     return {"measure": "comment_theme_share", "scope": f.scope_label(ledger.lang), "rows": rows}
@@ -255,10 +257,15 @@ def compare_segments(args: CompareArgs, ledger: Ledger) -> dict:
         delta, delta_unit = 100 * (a2 / sum(da) - b2 / sum(db)), "pp"
     delta = round_half_up(delta, decimals)
     p = test.p if test else 1.0
+    # A direction only means something over time, and time runs from the earlier period to the later one
+    direction = None
+    if args.dimension == "period" and delta != 0:
+        a_is_later = max(qa) > max(qb)
+        direction = "up" if (delta > 0) == a_is_later else "down"
     s = ledger.add(
         key=f"compare.{args.measure}", kind="delta", label=title, value=delta, unit=delta_unit, decimals=decimals,
         n=na + nb, significant=p < ALPHA, test=test.test if test else None,
-        direction="flat" if delta == 0 else ("up" if delta > 0 else "down"), entities=ents,
+        direction=direction, entities=ents,
         related=[
             Number(name="value_a", value=va, unit=unit, decimals=decimals),
             Number(name="value_b", value=vb, unit=unit, decimals=decimals),

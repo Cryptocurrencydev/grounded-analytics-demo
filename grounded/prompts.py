@@ -1,4 +1,4 @@
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 
 _SHARED = """Writing rules. A deterministic validator checks all of this and rejects anything that breaks it.
 - Use only figures that appear in the data you were given. Quote them as given, or rounded to fewer decimals with round-half-up. Means and changes on the 1-5 scale keep at least 1 decimal. Counts stay exact.
@@ -6,6 +6,7 @@ _SHARED = """Writing rules. A deterministic validator checks all of this and rej
 - Write every quantity in digits. Do not use words such as "two", "half", "doubled", "zwei", "Hälfte". Use general wording such as "several" or "the largest" if you have no figure.
 - Say "significant" only about a stat with significant=true. A change with significant=false may be reported, but describe it as not statistically significant or leave it out.
 - Say rose or fell only in line with the stat's direction.
+- Higher is better on every question. The workload question measures how manageable workload is, so always write "manageable workload" ("bewältigbare Arbeitsbelastung") when describing a rise or fall, never "workload fell".
 - Report what the numbers show, never why. No causal words ("because", "due to", "driven by", "weil", "aufgrund", "wegen", "dank").
 - Name a region, department, role or question only if a stat you cite covers it.
 - Do not put stat ids in the text. They belong in cites.

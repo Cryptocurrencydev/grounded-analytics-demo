@@ -58,6 +58,20 @@ def test_score_comparison_accepts_either_sign():
     assert score(Q["c01"], "answer", f"The difference is -{d:.2f}.")["correct"]
 
 
+def test_true_side_figures_are_not_called_unsupported():
+    q = Q["n03"]
+    true_promoters = round(100 * (DF.nps >= 9).mean(), 1)
+    v = q["expected"][0]["value"]
+    r = score(q, "answer", f"The NPS is {v:.1f}, with {true_promoters}% promoters and {(DF.nps >= 9).sum()} people scoring 9-10.")
+    assert r["correct"] and r["unsupported"] == []
+
+
+def test_false_side_figures_are_still_caught():
+    q = Q["n10"]
+    r = score(q, "answer", "The West mean is 3.36.")
+    assert not r["correct"] and r["unsupported"] == ["3.36"]
+
+
 def test_summary_counts():
     row = {**Q["n01"], "baseline": {"correct": True, "unsupported": [], "refused": False, "answer_type": "answer", "latency_s": 1, "usage": {}}}
     s = summarise([row], "baseline")

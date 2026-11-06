@@ -15,10 +15,11 @@ def pair(k):
 rows = [
     ("Numeric answers correct", *pair("numeric")),
     ("Significance calls correct", *pair("significance")),
-    ("Answers with an unsupported figure", b["answers_with_unsupported_figures"], g["answers_with_unsupported_figures"]),
-    ("Unsupported figures in total", b["unsupported_figures"], g["unsupported_figures"]),
+    ("Answers stating a figure not found in the data", b["answers_with_unsupported_figures"], g["answers_with_unsupported_figures"]),
+    ("Figures not found in the data, in total", b["unsupported_figures"], g["unsupported_figures"]),
     ("Correct refusals (unanswerable, tiny samples)", *pair("refusal")),
     ("Refused an answerable question", b["over_refusals"], g["over_refusals"]),
+    ("Questions with no usable answer", b["no_answer"], g["no_answer"] + g["withheld"]),
     ("Input tokens, all questions", f"{b['input_tokens']:,}", f"{g['input_tokens']:,}"),
     ("Mean time per answer", f"{b['mean_latency_s']} s", f"{g['mean_latency_s']} s"),
 ]

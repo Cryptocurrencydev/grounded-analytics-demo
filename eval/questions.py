@@ -10,6 +10,7 @@ from scipy import stats as sps
 ROOT = Path(__file__).resolve().parent.parent
 DF = pd.read_parquet(ROOT / "data" / "responses.parquet")
 MIN_N = 30
+QUESTIONS = ["satisfaction", "workload", "leadership", "growth", "recognition", "wellbeing"]
 
 
 def sl(period=None, **dims) -> pd.DataFrame:
@@ -79,16 +80,58 @@ def refusal(id, category, question, slices=()):
                 significance=None, names=[], n=[len(s) for s in slices])
 
 
+def _slice_figures(s: pd.DataFrame, tag: str) -> list[dict]:
+    """Every true figure a careful analyst could quote about one slice."""
+    if not len(s):
+        return []
+    out = [count_fig(f"{tag} n", s)]
+    for q in QUESTIONS:
+        c = s[f"q_{q}"]
+        out += [fig(f"{tag} {q} sum", c.sum(), "count", 0), mean_fig(f"{tag} {q} mean", s, q),
+                fig(f"{tag} {q} sd", c.std(ddof=1), "scale", 2),
+                fig(f"{tag} {q} agree n", (c >= 4).sum(), "count", 0), fig(f"{tag} {q} agree", agree(s, q), "pct", 1),
+                fig(f"{tag} {q} disagree n", (c <= 2).sum(), "count", 0), fig(f"{tag} {q} disagree", disagree(s, q), "pct", 1)]
+    groups = {"promoters": s.nps >= 9, "passives": s.nps.between(7, 8), "detractors": s.nps <= 6}
+    out.append(fig(f"{tag} nps", nps(s), "nps", 1))
+    for name, mask in groups.items():
+        out += [fig(f"{tag} {name} n", mask.sum(), "count", 0), fig(f"{tag} {name}", 100 * mask.mean(), "pct", 1)]
+    themes = s.theme.value_counts()
+    out.append(fig(f"{tag} comments", themes.sum(), "count", 0))
+    for k, v in themes.items():
+        out += [fig(f"{tag} {k} n", v, "count", 0), fig(f"{tag} {k}", 100 * v / themes.sum(), "pct", 1)]
+    return out
+
+
+def truth_table(slices: list[pd.DataFrame]) -> list[dict]:
+    """All true figures for a question's slices, per quarter too, and between pairs of slices.
+
+    An answer's number counts as unsupported only if it matches nothing here. The table is wide on
+    purpose: a wrong count can match by chance, which favours the baseline, never the grounded side.
+    """
+    out: list[dict] = []
+    for i, s in enumerate(slices):
+        out += _slice_figures(s, f"s{i}")
+        for quarter, part in s.groupby("quarter"):
+            out += _slice_figures(part, f"s{i} {quarter}")
+    for i, a in enumerate(slices):
+        for b in slices[i + 1:]:
+            out.append(fig("n total", len(a) + len(b), "count", 0))
+            out.append(fig("nps diff", abs(nps(a) - nps(b)), "nps_delta", 1))
+            for q in QUESTIONS:
+                x, y = a[f"q_{q}"], b[f"q_{q}"]
+                t = sps.ttest_ind(x, y, equal_var=False)
+                out += [fig(f"{q} diff", abs(x.mean() - y.mean()), "scale_delta", 2), fig(f"{q} t", abs(t.statistic), "scale_delta", 2),
+                        fig(f"{q} df", t.df, "nps", 0), fig(f"{q} agree diff", abs(agree(a, q) - agree(b, q)), "pp", 1)]
+    return out
+
+
 def build() -> list[dict]:
     ops26, ops25 = sl("2026", department="Operations"), sl("2025", department="Operations")
     fin, ops = sl(department="Finance"), sl(department="Operations")
     north26, north25 = sl("2026", region="North"), sl("2025", region="North")
     dept_workload = DF.groupby("department").q_workload.mean()
-    lowest_dept = dept_workload.idxmin()
     region_nps = {r: nps(sl(region=r)) for r in DF.region.unique()}
-    best_region = max(region_nps, key=region_nps.get)
     themes = DF.theme.value_counts()
-    top_theme = themes.index[0]
     q3, q2 = sl("2026-Q3"), sl("2026-Q2")
     sup3, sup2 = sl("2026-Q3", department="Support"), sl("2026-Q2", department="Support")
 
@@ -149,6 +192,16 @@ def build() -> list[dict]:
         refusal("m04", "tiny_sample", "Compare mean wellbeing between Managers in Finance and Managers in Support in Q3 2026.",
                 [sl("2026-Q3", department="Finance", role="Manager"), sl("2026-Q3", department="Support", role="Manager")]),
     ]
+    depts = [sl(department=d) for d in dept_workload.index]
+    regions = [sl(region=r) for r in region_nps]
+    scope = {
+        "n01": [DF], "n02": [q3], "n03": [DF], "n04": [q3], "n05": [ops26], "n06": [sl("2026-Q3", region="North")],
+        "n07": [sl(department="Engineering")], "n08": [sl("2026", department="Operations", region="South")],
+        "n09": [sl(department="Sales"), DF], "n10": [sl(region="West")], "n11": [sl("2025", department="Support")], "n12": [DF],
+        "n13": [sl(role="Director")], "n14": [*depts, DF], "n15": [*regions, DF], "c01": [fin, ops], "c02": [north26, north25],
+        "c03": [sl(department="Sales"), sl(department="Support")], "c04": [sup3, sup2], "c05": [ops26, ops25],
+        "s01": [ops, fin], "s02": [sl(region="West"), sl(region="East")], "s03": [q3, q2], "s04": [ops26, ops25],
+    }
     for q in questions:
-        q["note"] = {"lowest_dept": lowest_dept, "best_region": best_region, "top_theme": top_theme}.get(q["id"], "")
+        q["truth_table"] = truth_table(scope.get(q["id"], []))
     return questions

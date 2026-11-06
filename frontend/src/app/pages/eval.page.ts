@@ -6,7 +6,7 @@ import { catchError, of } from 'rxjs';
 interface Side {
   questions: number; numeric_total: number; numeric_correct: number; significance_total: number; significance_correct: number;
   refusal_total: number; refusal_correct: number; answers_with_unsupported_figures: number; unsupported_figures: number;
-  over_refusals: number; withheld: number; regenerated: number; input_tokens: number; output_tokens: number; mean_latency_s: number;
+  over_refusals: number; withheld: number; no_answer: number; regenerated: number; input_tokens: number; output_tokens: number; mean_latency_s: number;
 }
 interface Answer {
   answer_type: string; text: string; correct: boolean; refused: boolean; unsupported: string[]; latency_s: number;
@@ -45,11 +45,11 @@ const CATEGORIES: Record<string, string> = {
         <div class="vs-head"><span></span><h2>Naive baseline<small>raw rows in the prompt</small></h2><h2>Grounded<small>tools + validator</small></h2></div>
         <div class="vs-row"><span>Numeric answers correct</span><b data-testid="base-numeric">{{ b.numeric_correct }} / {{ b.numeric_total }}</b><b data-testid="ground-numeric">{{ g.numeric_correct }} / {{ g.numeric_total }}</b></div>
         <div class="vs-row"><span>Significance calls correct</span><b>{{ b.significance_correct }} / {{ b.significance_total }}</b><b>{{ g.significance_correct }} / {{ g.significance_total }}</b></div>
-        <div class="vs-row"><span>Answers with an unsupported figure</span><b data-testid="base-halluc">{{ b.answers_with_unsupported_figures }}</b><b data-testid="ground-halluc">{{ g.answers_with_unsupported_figures }}</b></div>
-        <div class="vs-row"><span>Unsupported figures in total</span><b>{{ b.unsupported_figures }}</b><b>{{ g.unsupported_figures }}</b></div>
+        <div class="vs-row"><span>Answers stating a figure not found in the data</span><b data-testid="base-halluc">{{ b.answers_with_unsupported_figures }}</b><b data-testid="ground-halluc">{{ g.answers_with_unsupported_figures }}</b></div>
+        <div class="vs-row"><span>Figures not found in the data, in total</span><b>{{ b.unsupported_figures }}</b><b>{{ g.unsupported_figures }}</b></div>
         <div class="vs-row"><span>Correct refusals (unanswerable, tiny samples)</span><b>{{ b.refusal_correct }} / {{ b.refusal_total }}</b><b>{{ g.refusal_correct }} / {{ g.refusal_total }}</b></div>
         <div class="vs-row"><span>Refused an answerable question</span><b>{{ b.over_refusals }}</b><b>{{ g.over_refusals }}</b></div>
-        <div class="vs-row"><span>Answers withheld by the validator</span><b>n/a</b><b>{{ g.withheld }}</b></div>
+        <div class="vs-row"><span>Questions with no usable answer</span><b>{{ b.no_answer }}</b><b>{{ g.no_answer + g.withheld }}</b></div>
         <div class="vs-row"><span>Input tokens, all questions</span><b>{{ b.input_tokens.toLocaleString('en-GB') }}</b><b>{{ g.input_tokens.toLocaleString('en-GB') }}</b></div>
         <div class="vs-row"><span>Mean time per answer</span><b>{{ b.mean_latency_s }} s</b><b>{{ g.mean_latency_s }} s</b></div>
       </section>
@@ -87,7 +87,7 @@ const CATEGORIES: Record<string, string> = {
       <ul class="plain">
         <li>Both systems get the same rules, including the 30-response minimum, and return the same answer type field. Only the text a user would see is scored.</li>
         <li>A numeric answer is correct when each expected figure appears, under the same rounding rules as the validator.</li>
-        <li>An unsupported figure is any number in the text that matches no computed value for that question. p-values are not scored, because they depend on the test chosen.</li>
+        <li>Every other number in an answer is checked against a wide table of true figures for the slices in that question: counts, sums, means, SDs, shares, per-quarter values, differences, t and degrees of freedom. A number that matches nothing is counted as not found. The table is wide on purpose, so a wrong count can match by chance. That favours the baseline. p-values are not scored, because they depend on rounding and the test chosen.</li>
         <li>A refusal is correct when the system declines and states no invented figure.</li>
         <li>The baseline ran at a higher effort setting than the grounded system, to give it its best chance.</li>
       </ul>

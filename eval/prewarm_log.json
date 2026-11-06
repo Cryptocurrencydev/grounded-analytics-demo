@@ -1,0 +1,19 @@
+{
+ "interpretations": 62,
+ "first_try": 53,
+ "regenerated": 9,
+ "fallback": 0,
+ "issues": [
+  "entity_not_in_cited_stat",
+  "unsupported_significance",
+  "number_not_found",
+  "unsupported_significance",
+  "entity_not_in_cited_stat",
+  "entity_not_in_cited_stat",
+  "entity_not_in_cited_stat",
+  "number_not_in_cited_stat",
+  "entity_not_in_cited_stat",
+  "unsupported_significance",
+  "entity_not_in_cited_stat"
+ ]
+}

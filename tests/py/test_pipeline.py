@@ -222,6 +222,29 @@ def test_compare_periods_and_agree_share():
     assert out["rows"][0]["unit"] == "pp" and out["rows"][0]["test"] == "chi2"
 
 
+def test_period_direction_follows_time_not_argument_order():
+    args = lambda a, b: {"measure": "mean_workload", "dimension": "period", "a": a, "b": b, "filters": Filters(department="Operations").model_dump()}
+    for a, b in (("2025", "2026"), ("2026", "2025")):
+        ledger = tools.Ledger("en")
+        tools.execute("compare_segments", args(a, b), ledger)
+        assert ledger.stats["C01"].direction == "down", "the score fell from 2025 to 2026 whichever way it was asked"
+
+
+def test_segment_comparison_has_no_direction():
+    ledger = tools.Ledger("en")
+    tools.execute("compare_segments", {"measure": "mean_workload", "dimension": "region", "a": "North", "b": "South",
+                                       "filters": Filters().model_dump()}, ledger)
+    assert ledger.stats["C01"].direction is None
+
+
+def test_theme_name_counts_as_covering_its_question():
+    from grounded.models import Claim
+    from grounded.validator import validate
+    sheet = build_sheet(Filters())
+    s = next(x for x in sheet.stats if x.key == "theme.workload_pressure")
+    assert validate([Claim(text=f"Workload pressure leads at {s.value}% of comments.", cites=[s.id])], sheet.by_id(), "en").ok
+
+
 # Chat
 
 def test_chat_applies_filters_through_the_tool():

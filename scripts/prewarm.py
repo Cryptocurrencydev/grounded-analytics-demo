@@ -3,11 +3,15 @@ writes them to data/precomputed.json, so the usual demo path costs nothing and l
 from __future__ import annotations
 
 import json
+import os
+import secrets
 from concurrent.futures import ThreadPoolExecutor
 
 from grounded.env import load_env_file
 
 load_env_file()
+# Committed payloads carry pseudonyms, so they are made with a salt that is not in the repo
+os.environ.setdefault("PSEUDONYM_SALT", secrets.token_hex(24))
 
 from grounded import applications
 from grounded.catalog import DATA_DIR, DEPARTMENTS, REGIONS, ROLES, Filters

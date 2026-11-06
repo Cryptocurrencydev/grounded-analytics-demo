@@ -14,6 +14,11 @@ jobs:
       - run: pip install -r requirements-dev.txt
       - run: ruff check grounded eval scripts tests api
       - run: pytest -q
+      - name: The deployed entrypoint imports with runtime dependencies only
+        run: |
+          python -m venv /tmp/runtime && /tmp/runtime/bin/pip install -q -r requirements.txt
+          test ! -f pyproject.toml  # Vercel would install from it instead of requirements.txt
+          /tmp/runtime/bin/python -c "import api.index as m; print(m.app.title)"
 
   frontend:
     runs-on: ubuntu-latest
