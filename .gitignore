@@ -14,3 +14,4 @@ playwright-report/
 frontend/public/eval-results.json
 *.log
 .DS_Store
+.vercel
